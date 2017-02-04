@@ -157,26 +157,8 @@ public class SignUpActivity extends AppCompatActivity {
 		activity_signup_btn.setOnClickListener(view -> {
 			String email = activity_signup_edt_id.getText().toString().trim();
 			String passwd = activity_signup_edt_pwd.getText().toString();
+			presenter.registerUser(email, passwd);
 
-			if (isValid(email, passwd)) {
-				presenter.checkDuplicateEmail(email)
-						.subscribe(new Subscriber<String>() {
-							@Override
-							public void onCompleted() {
-								presenter.registerUser(email, passwd);
-							}
-
-							@Override
-							public void onError(Throwable e) {
-								Toast.makeText(SignUpActivity.this, "already to join email", Toast.LENGTH_SHORT).show();
-							}
-
-							@Override
-							public void onNext(String s) {
-
-							}
-						});
-			}
 		});
 
 	}

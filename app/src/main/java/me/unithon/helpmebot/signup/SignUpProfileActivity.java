@@ -38,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
+import me.unithon.helpmebot.MainActivity;
 import me.unithon.helpmebot.R;
 import me.unithon.helpmebot.util.SharePrefUtil;
 import me.unithon.helpmebot.vo.MyInfoDAO;
@@ -65,8 +66,12 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 	@BindView(R.id.activity_signup_profile_btn_female)
 	Button activity_signup_profile_btn_female;
 
+	@BindView(R.id.accountNuber)
+	EditText accountNuber;
+
 	public String email;
 	public String passwd;
+	public String accountName;
 
 	public ISignUpProfilePresenter presenter;
 
@@ -122,11 +127,17 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 		passwd = intent.getExtras().getString("pwd");
 
 		setLayoutInit();
+		checkAccountNumber();
 
 		presenter = new SignUpProfilePresenter(this);
 
 		setGender();
 
+	}
+
+	private void checkAccountNumber() {
+
+		isCheckAccountNumber(accountNuber.getText().toString());
 	}
 
 	private void setToolbar() {
@@ -226,14 +237,14 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 								hideLoadingBar();
 								SharePrefUtil.putSharedPreference("isLoggedIn", true);
-								Intent intent = new Intent(getApplicationContext(), PlanActivity.class);
+								Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 								startActivity(intent);
 								finish();
 							}
 
 							@Override
 							public void onError(Throwable e) {
-
+								e.printStackTrace();
 							}
 
 							@Override
@@ -263,6 +274,15 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 		}
 
 		return true;
+	}
+
+	private boolean isCheckAccountNumber(String number) {
+		if (number.contains(" ") || number.contains("-")) {
+			Toast.makeText(this, "오직 숫자만 입력해주세요", Toast.LENGTH_SHORT).show();
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	@Override
@@ -461,25 +481,17 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 		imgfile = new File(strFilePath);
 		OutputStream out = null;
 
-		try
-		{
+		try {
 			imgfile.createNewFile();
 			out = new FileOutputStream(imgfile);
 
 			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
+		} finally {
+			try {
 				out.close();
-			}
-			catch (IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
