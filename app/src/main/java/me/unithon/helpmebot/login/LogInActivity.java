@@ -19,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,8 +27,6 @@ import com.google.android.gms.plus.model.people.Person;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
-import com.squareup.haha.perflib.Main;
-
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

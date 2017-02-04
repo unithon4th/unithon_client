@@ -20,7 +20,7 @@
     <application
         android:name=".util.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/icon_roler"
+        android:icon="@drawable/main_icon"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
@@ -34,12 +34,21 @@
         </activity>
 
         <activity android:name=".signup.SignUpActivity">
+
+        </activity>
+
+        <activity
+            android:name=".login.LogInActivity"
+            android:theme="@style/NoAppBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+
+
         <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
                   android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
