@@ -38,8 +38,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
-import me.unithon.helpmebot.MainActivity;
 import me.unithon.helpmebot.R;
+import me.unithon.helpmebot.main.MainActivity;
 import me.unithon.helpmebot.util.SharePrefUtil;
 import me.unithon.helpmebot.vo.MyInfoDAO;
 import rx.Subscriber;
@@ -142,11 +142,12 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 	private void setToolbar() {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolBar);
+		toolbar.setBackgroundResource(R.color.main);
 		TextView textView = (TextView) findViewById(R.id.toolbar_title);
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("Sign Up Profile");
+		textView.setText("회원 가입 세부 입력");
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(view -> {

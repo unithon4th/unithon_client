@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <color name="main">#2F762E</color>
     <color name="transparent">#00000000</color>
     <color name="c1">#e60000</color>
     <color name="c2">#6C717B</color>

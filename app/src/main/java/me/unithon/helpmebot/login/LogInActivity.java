@@ -35,8 +35,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
-import me.unithon.helpmebot.MainActivity;
 import me.unithon.helpmebot.R;
+import me.unithon.helpmebot.main.MainActivity;
 import me.unithon.helpmebot.signup.SignUpActivity;
 import me.unithon.helpmebot.util.SharePrefUtil;
 import me.unithon.helpmebot.vo.MyInfoDAO;
@@ -55,8 +55,11 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 	private static final int single_top_activity = 999;
 
 	private static final String TAG = "Login_Activity";
+	//nfRec7uCc36x_KoxxTzC mibXVpxmLXquLiveCDnu
 	private static String OAUTH_CLIENT_ID = "nfRec7uCc36x_KoxxTzC";
+	//dPDGbaB_3V 62DUtO2bTs
 	private static String OAUTH_CLIENT_SECRET = "dPDGbaB_3V";
+	//Roler UNITHON_4TH
 	private static String OAUTH_CLIENT_NAME = "Roler";
 	private OAuthLogin mOAuthLoginModule;
 	private ILoginPresenter loginPresenter;
@@ -278,6 +281,23 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				long expiresAt = mOAuthLoginModule.getExpiresAt(getApplicationContext());
 				String tokenType = mOAuthLoginModule.getTokenType(getApplicationContext());
 				Toast.makeText(getApplicationContext(), accessToken + refreshToken + expiresAt + tokenType, Toast.LENGTH_SHORT).show();
+				loginPresenter.sendToken(accessToken,refreshToken,tokenType,OAUTH_CLIENT_NAME)
+				.subscribe(new Subscriber<Void>() {
+					@Override
+					public void onCompleted() {
+
+					}
+
+					@Override
+					public void onError(Throwable e) {
+						e.printStackTrace();
+					}
+
+					@Override
+					public void onNext(Void aVoid) {
+
+					}
+				});
 				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 				startActivity(intent);
 				finish();

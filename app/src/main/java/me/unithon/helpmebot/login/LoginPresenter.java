@@ -31,4 +31,11 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 				.signIn(email,pwd)
 				.observeOn(AndroidSchedulers.mainThread());
 	}
+
+	@Override
+	public Observable<Void> sendToken(String accessToken, String refreshToken, String tokenType, String clientId) {
+		return userService
+				.sendToken(accessToken, refreshToken, tokenType, clientId)
+				.observeOn(AndroidSchedulers.mainThread());
+	}
 }

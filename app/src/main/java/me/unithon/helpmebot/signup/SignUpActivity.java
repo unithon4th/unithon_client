@@ -86,11 +86,12 @@ public class SignUpActivity extends AppCompatActivity {
 
 	private void setToolbar() {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolBar);
+		toolbar.setBackgroundResource(R.color.main);
 		TextView textView = (TextView) findViewById(R.id.toolbar_title);
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("Sign Up");
+		textView.setText("회원 가입");
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(view -> {
@@ -157,7 +158,9 @@ public class SignUpActivity extends AppCompatActivity {
 		activity_signup_btn.setOnClickListener(view -> {
 			String email = activity_signup_edt_id.getText().toString().trim();
 			String passwd = activity_signup_edt_pwd.getText().toString();
-			presenter.registerUser(email, passwd);
+			if (isValid(email, passwd)) {
+				presenter.registerUser(email, passwd);
+			}
 
 		});
 

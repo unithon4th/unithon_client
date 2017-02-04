@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.File;
 import java.io.IOException;
 
 import me.unithon.helpmebot.net.serialization.BotResponse;
@@ -200,6 +201,55 @@ public class UserService extends BaseService {
 
 	}
 
+	public Observable<Void> sendToken(String accessToken,String refreshToken
+			,String tokenType,String clientId){
+
+		return Observable.create(subscriber -> {
+
+			getAPI().sendToken(accessToken, refreshToken, tokenType, clientId)
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<ResponseBody>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+
+						}
+
+						@Override
+						public void onNext(ResponseBody responseBody) {
+
+							try {
+								String result = parseParams(responseBody.string());
+								if (result.equals("success")) {
+									subscriber.onCompleted();
+
+								} else {
+									subscriber.onError(new Throwable());
+								}
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+
+						}
+
+						private String parseParams(String json) {
+							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+							String result = ja.get("res").getAsString();
+
+							return result;
+						}
+
+					});
+
+		});
+
+	}
+
 
 	public interface UserAPI {
 
@@ -217,5 +267,11 @@ public class UserService extends BaseService {
 		@FormUrlEncoded
 		@POST("/auth/signup")
 		Observable<ResponseBody> signUp(@Field("name") String name, @Field("email") String email, @Field("password") String password);
+
+		@FormUrlEncoded
+		@POST("/auth/naver")
+		Observable<ResponseBody> sendToken(@Field("accessToken")String accessToken
+		, @Field("refreshToken")String refreshToken,@Field("tokenType") String tokenType
+		, @Field("clientId") String clientId);
 	}
 }

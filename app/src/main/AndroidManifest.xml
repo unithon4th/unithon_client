@@ -20,41 +20,40 @@
     <application
         android:name=".util.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/main_icon"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/NoAppBarTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".signup.SignUpProfileActivity"
+            android:theme="@style/NoAppBarTheme">
+        </activity>
+        <activity android:name=".signup.SignUpActivity">
+        </activity>
+        <activity
+            android:name=".login.LogInActivity"
+            android:theme="@style/NoAppBarTheme">
+
+        </activity>
+        <activity
+            android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
+            android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
+            android:label="OAuth2.0 In-app"/>
+        <activity android:name=".splash.SplashActivity">
+
+        </activity>
+        <activity android:name=".setting.SettingActivity"/>
+        <activity android:name=".main.MainActivity"
+                  android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
-        <activity
-            android:name=".signup.SignUpProfileActivity"
-            android:theme="@style/NoAppBarTheme">
-        </activity>
-
-        <activity android:name=".signup.SignUpActivity">
-
-        </activity>
-
-        <activity
-            android:name=".login.LogInActivity"
-            android:theme="@style/NoAppBarTheme">
-        </activity>
-
-
-
-        <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-        <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
-                  android:label="OAuth2.0 In-app"/>
-
-
     </application>
 
 </manifest>
