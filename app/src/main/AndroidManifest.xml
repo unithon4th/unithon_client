@@ -24,12 +24,13 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-<<<<<<< HEAD
-        android:theme="@style/MyTheme">
-=======
         android:theme="@style/NoAppBarTheme">
->>>>>>> 1f77a1455b2891fd3c768e7150c0cf2bf46b0783
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
         </activity>
         <activity
@@ -44,11 +45,6 @@
         <activity
             android:name=".login.LogInActivity"
             android:theme="@style/NoAppBarTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
 
