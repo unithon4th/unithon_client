@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">돈톡</string>
+
+    //signUpActivity
+    <string name="join_empty_email">Please enter your email</string>
+    <string name="join_too_long_email">Your email must be less than characters</string>
+    <string name="join_invalid_email">The email format is not correct</string>
+    <string name="join_invalid_pwd">The password format is not correct</string>
+    <string name="join_empty_pwd">Please enter a password</string>
+    <string name="join_too_short_pwd">Password must be longer than 8 characters</string>
+
+
+    //myinfokey
+    <string name="key_alias">DONTOK KEY</string>
+
+     <string name="invite"> 님 돈톡을 사용해주셔서 감사합니다. 잘 사용하셨다면 친구들에게 추천해보세요!
+    </string>
+
+</resources>

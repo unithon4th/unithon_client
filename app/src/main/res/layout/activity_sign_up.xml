@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/activity_singnup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="me.unithon.helpmebot.signup.SignUpActivity">
+
+    <include
+        android:id="@+id/custom_toolBar"
+        layout="@layout/toolbar"/>
+
+
+    <ScrollView
+        android:layout_below="@id/custom_toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="25dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="25dp">
+
+
+            <LinearLayout
+                android:id="@+id/ll_Id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#96FFFFFF">
+
+                <EditText
+                    android:id="@+id/activity_signup_edt_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:background="@android:color/transparent"
+                    android:hint="ID (example@liveo.me)"
+                    android:inputType="textNoSuggestions"
+                    android:lines="1"
+                    android:textColor="#333333"
+                    android:textColorHint="@color/soft_grey"
+                    android:textCursorDrawable="@null"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_Pwd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/ll_Id"
+                android:layout_marginTop="18dp"
+                android:background="#96FFFFFF"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/activity_signup_edt_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="PW (Min 8 characters including a number)"
+                    android:inputType="textPassword|textNoSuggestions"
+                    android:lines="1"
+                    android:textColor="#333333"
+                    android:textColorHint="@color/soft_grey"
+                    android:textCursorDrawable="@null"
+                    android:textSize="15sp"/>
+
+
+                <TextView
+                    android:id="@+id/activity_signup_tv_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/activity_signup_ll_policy"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/activity_signup_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/hard_grey"
+        android:text="Next"
+        android:textColor="@color/white"/>
+
+
+</RelativeLayout>
