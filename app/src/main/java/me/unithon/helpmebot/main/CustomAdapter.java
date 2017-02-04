@@ -1,17 +1,20 @@
 package me.unithon.helpmebot.main;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.unithon.helpmebot.R;
 
 /**
@@ -68,6 +71,7 @@ public class CustomAdapter extends BaseAdapter {
 		LinearLayout layout  = null;
 		View            viewRight = null;
 		View viewLeft = null;
+		CircleImageView imageView = null;
 
 
 		if ( convertView == null ) {
@@ -79,7 +83,7 @@ public class CustomAdapter extends BaseAdapter {
 			text    = (TextView) convertView.findViewById(R.id.text);
 			viewRight    = (View) convertView.findViewById(R.id.imageViewright);
 			viewLeft    = (View) convertView.findViewById(R.id.imageViewleft);
-
+			imageView = (CircleImageView)convertView.findViewById(R.id.categoryImage);
 
 
 			holder = new CustomHolder();
@@ -87,6 +91,7 @@ public class CustomAdapter extends BaseAdapter {
 			holder.layout = layout;
 			holder.viewRight = viewRight;
 			holder.viewLeft = viewLeft;
+			holder.imageView =  imageView;
 			convertView.setTag(holder);
 		}
 		else {
@@ -95,25 +100,32 @@ public class CustomAdapter extends BaseAdapter {
 			layout  = holder.layout;
 			viewRight = holder.viewRight;
 			viewLeft = holder.viewLeft;
+			imageView = holder.imageView;
+
 		}
 
 
 		text.setText(m_List.get(position).msg);
 
 		if( m_List.get(position).type == 0 ) {
-//			text.setBackgroundResource(R.drawable.inbox2);
+			imageView.setVisibility(View.VISIBLE);
+			imageView.setBackgroundResource(R.drawable.saimdang_spk);
+			text.setBackgroundResource(R.drawable.detail_category_button_9);
 			layout.setGravity(Gravity.LEFT);
 			viewRight.setVisibility(View.GONE);
 			viewLeft.setVisibility(View.GONE);
 		}else if(m_List.get(position).type == 1){
-//			text.setBackgroundResource(R.drawable.outbox2);
+			text.setBackgroundResource(R.drawable.detail_category_button_9);
 			layout.setGravity(Gravity.RIGHT);
 			viewRight.setVisibility(View.GONE);
+			imageView.setVisibility(View.GONE);
 			viewLeft.setVisibility(View.GONE);
 		}else if(m_List.get(position).type == 2){
 //			text.setBackgroundResource(R.drawable.datebg);
+			text.setVisibility(View.GONE);
 			layout.setGravity(Gravity.CENTER);
 			viewRight.setVisibility(View.VISIBLE);
+			imageView.setVisibility(View.GONE);
 			viewLeft.setVisibility(View.VISIBLE);
 		}
 
@@ -144,6 +156,7 @@ public class CustomAdapter extends BaseAdapter {
 		LinearLayout    layout;
 		View viewRight;
 		View viewLeft;
+		CircleImageView imageView;
 	}
 }
 

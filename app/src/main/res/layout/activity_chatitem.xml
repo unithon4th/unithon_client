@@ -6,7 +6,13 @@
               android:layout_gravity="center_horizontal"
               android:gravity="center"
               android:orientation="horizontal">
-
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:visibility="gone"
+        android:layout_gravity="right|center_vertical"
+        android:background="@drawable/app_icon"
+        android:id="@+id/categoryImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <View
         android:id="@+id/imageViewleft"
         android:layout_width="wrap_content"

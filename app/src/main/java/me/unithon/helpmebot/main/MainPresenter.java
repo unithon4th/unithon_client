@@ -28,4 +28,12 @@ public class MainPresenter extends BasePresenter implements IMainPresenter {
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 
+	@Override
+	public Observable<Void> withdrawMoney(String userId, String accountNumber, int amount) {
+		return textService
+				.withdrawMoney(userId, accountNumber, amount)
+				.observeOn(AndroidSchedulers.mainThread());
+	}
+
+
 }

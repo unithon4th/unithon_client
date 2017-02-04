@@ -14,7 +14,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        applicationId "com.buttering.roler"
+        applicationId "me.unithon.helpmebot"
         minSdkVersion 18
         targetSdkVersion 23
         versionCode 1

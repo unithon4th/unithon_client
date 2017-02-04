@@ -66,8 +66,6 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 	@BindView(R.id.activity_signup_profile_btn_female)
 	Button activity_signup_profile_btn_female;
 
-	@BindView(R.id.accountNuber)
-	EditText accountNuber;
 
 	public String email;
 	public String passwd;
@@ -137,7 +135,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 	private void checkAccountNumber() {
 
-		isCheckAccountNumber(accountNuber.getText().toString());
+//		isCheckAccountNumber(accountNuber.getText().toString());
 	}
 
 	private void setToolbar() {

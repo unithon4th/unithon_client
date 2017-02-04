@@ -55,7 +55,7 @@ public class TextService extends BaseService {
 							try {
 								String result = parseParams(responseBody.string());
 								if (result.equals("success")) {
-									subscriber.onNext(null);
+									subscriber.onCompleted();
 
 								} else {
 									subscriber.onError(new Throwable());
@@ -107,11 +107,61 @@ public class TextService extends BaseService {
 		});
 	}
 
+	public Observable<Void> withdrawMoney(String userId, String accountNumber, int amount){
+		return Observable.create( subscriber ->
+				getAPI().withdrawMoney(userId, accountNumber, amount)
+				.subscribeOn(Schedulers.io())
+				.subscribe(new Subscriber<ResponseBody>() {
+					@Override
+					public void onCompleted() {
+
+					}
+
+					@Override
+					public void onError(Throwable e) {
+
+					}
+
+					@Override
+					public void onNext(ResponseBody responseBody) {
+
+						try {
+							String result = parseParams(responseBody.string());
+							if (result.equals("success")) {
+								subscriber.onCompleted();
+
+							} else {
+								subscriber.onError(new Throwable());
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+					}
+
+					private String parseParams(String json) {
+
+						JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
+						String result = ja.get("res").getAsString();
+
+						return result;
+					}
+
+				})
+		);
+	}
+
 	public interface TextAPI {
 		@FormUrlEncoded
 		@POST("/chat/add")
 		Observable<ResponseBody> sendText(@Field("userId") String userId, @Field("chatText") String
 				chatText);
+
+		@FormUrlEncoded
+		@POST("/bank/withdraw")
+		Observable<ResponseBody> withdrawMoney(@Field("userId")String userId
+		,@Field("told")String accountNumber,@Field("amount")int amount);
+
 
 	}
 }

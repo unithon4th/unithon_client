@@ -8,4 +8,5 @@ import rx.Observable;
 
 public interface IMainPresenter {
 	Observable<Void> sendString(String userId, String chatText);
+	Observable<Void> withdrawMoney(String userId, String accountNumber,int amount);
 }

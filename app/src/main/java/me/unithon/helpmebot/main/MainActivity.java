@@ -1,8 +1,10 @@
 package me.unithon.helpmebot.main;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
 		sendToServer();
 
+		isClosed();
+
 
 	}
 
@@ -87,10 +91,47 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 						@Override
 						public void onCompleted() {
 
-//							String name = SharePrefUtil.getSharedPreference("name");
-//							String money = SharePrefUtil.getSharedPreference("money");
+							String name = SharePrefUtil.getSharedPreference("name");
+							String money = SharePrefUtil.getSharedPreference("money");
 //							String query = SharePrefUtil.getSharedPreference("query");
 							String speech = SharePrefUtil.getSharedPreference("speech");
+							if(speech.equals("송금하시겠습니까?")){
+								AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+								alert.setMessage(name+"님에게"+money+"를 송금하시겠습니까?").setCancelable(false)
+										.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												presenter.withdrawMoney(name, ,money)
+														.subscribe(new Subscriber<Void>() {
+															@Override
+															public void onCompleted() {
+
+															}
+
+															@Override
+															public void onError(Throwable e) {
+
+															}
+
+															@Override
+															public void onNext(Void aVoid) {
+
+															}
+														});
+												finish();
+											}
+										})
+										.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												return;
+											}
+										});
+
+								AlertDialog alertDialog = alert.create();
+								alertDialog.show();
+
+							}
 							m_Adapter.add(speech, 0);
 							m_Adapter.notifyDataSetChanged();
 							hideLoadingBar();
@@ -166,6 +207,26 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 	public void hideLoadingBar() {
 		if (dialog != null)
 			dialog.dismiss();
+	}
+
+	public void isClosed(){
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setMessage("돈톡를 종료 하시겠습니까?").setCancelable(false)
+				.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+				})
+				.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						return;
+					}
+				});
+
+		AlertDialog alertDialog = alert.create();
+		alertDialog.show();
 	}
 
 }
