@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.google.android.gms.plus.model.people.Person;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
+import com.squareup.picasso.Picasso;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -79,6 +81,13 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 	@BindView(R.id.pw_et)
 	TextView pw_et;
+
+	@BindView(R.id.imvLoginLogo)
+	ImageView imvLogo;
+
+
+	@BindView(R.id.imvLoginBack)
+	ImageView imvBack;
 
 	private GoogleApiClient mGoogleApiClient;
 
@@ -140,6 +149,20 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		initLoginSetting();
 		initFbService();
 
+		init();
+
+	}
+
+	void init(){
+		Picasso.with(getBaseContext())
+				.load(R.drawable.landing_sejong)
+				.fit()
+				.into(imvLogo);
+
+		Picasso.with(getBaseContext())
+				.load(R.drawable.b_g)
+				.fit()
+				.into(imvBack);
 	}
 
 
