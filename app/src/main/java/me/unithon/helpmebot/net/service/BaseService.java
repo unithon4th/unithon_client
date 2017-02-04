@@ -7,6 +7,8 @@ import com.google.gson.JsonParser;
 
 import me.unithon.helpmebot.net.serialization.BotResponse;
 import me.unithon.helpmebot.net.serialization.BotResponseDeserializer;
+import me.unithon.helpmebot.net.service.cookies.AddCookiesInterceptor;
+import me.unithon.helpmebot.net.service.cookies.ReceivedCookiesInterceptor;
 import me.unithon.helpmebot.util.MyApplication;
 import me.unithon.helpmebot.util.NetUtil;
 import okhttp3.Interceptor;
@@ -25,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BaseService<T> {
 
 
-	public static final String BASE_URL = "http://52.78.65.255:3000";
+	public static final String BASE_URL = "http://52.79.117.255";
 
 	private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = chain -> {
 		Response originalResponse = chain.proceed(chain.request());
@@ -56,9 +58,17 @@ public class BaseService<T> {
 		gsonBuilder.registerTypeAdapter(BotResponse.class, new BotResponseDeserializer());
 		Gson myGson = gsonBuilder.create();
 
+		AddCookiesInterceptor addCookiesInterceptor = new AddCookiesInterceptor(MyApplication.getInstance().getContext());
+		ReceivedCookiesInterceptor receivedCookiesInterceptor = new ReceivedCookiesInterceptor(MyApplication.getInstance().getContext());
+
+		OkHttpClient httpClient = new OkHttpClient.Builder()
+				.addNetworkInterceptor(addCookiesInterceptor)
+				.addInterceptor(receivedCookiesInterceptor)
+				.build();
+
 
 		retrofit = new Retrofit.Builder()
-//				.client(httpClient.build())
+				.client(httpClient)
 				.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 				.addConverterFactory(GsonConverterFactory.create(myGson))
 				.baseUrl(BASE_URL)
@@ -96,6 +106,7 @@ public class BaseService<T> {
 			return chain.proceed(req);
 		});
 	}
+
 
 
 

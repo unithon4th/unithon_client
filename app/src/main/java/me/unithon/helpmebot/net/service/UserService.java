@@ -30,8 +30,7 @@ public class UserService extends BaseService {
 
 	public static boolean DEBUG = false;
 
-	private String userId;
-	private String name;
+	private String userId = "0";
 
 	public UserService() {
 		super(UserAPI.class);
@@ -69,9 +68,7 @@ public class UserService extends BaseService {
 
 							try {
 								String result = parseParams(responseBody.string());
-								if (result.equals("true")) {
-									MyInfoDAO.getInstance().setUserId(userId);
-									MyInfoDAO.getInstance().setName(name);
+								if (result.equals("success")) {
 									MyInfoDAO.getInstance().saveAccountInfo(userId, user.getEmail(), user.getPassword(), user.getName(), "NULL");
 									subscriber.onNext(user);
 
@@ -85,9 +82,7 @@ public class UserService extends BaseService {
 
 						private String parseParams(String json) {
 							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
-							String result = ja.get("result").getAsString();
-							userId = ja.get("id").getAsString();
-							name = ja.get("name").getAsString();
+							String result = ja.get("res").getAsString();
 
 							return result;
 						}
@@ -132,20 +127,20 @@ public class UserService extends BaseService {
 						public void onNext(ResponseBody responseBody) {
 							try {
 								String result = parseParams(responseBody.string());
-								if (result.equals("true")) {
+								if (result.equals("success")) {
 									subscriber.onNext(result);
 								} else {
 									subscriber.onError(new Throwable());
 								}
 							} catch (IOException e) {
-								e.printStackTrace();
+								e.  printStackTrace();
 							}
 
 						}
 
 						private String parseParams(String json) {
 							JsonObject ja = new JsonParser().parse(json).getAsJsonObject();
-							String param = ja.get("result").getAsString();
+							String param = ja.get("res").getAsString();
 							return param;
 						}
 
@@ -209,7 +204,7 @@ public class UserService extends BaseService {
 	public interface UserAPI {
 
 		@FormUrlEncoded
-		@POST("/auth/signup")
+		@POST("/auth/login")
 		Observable<ResponseBody> signIn(@Field("email") String email, @Field("password") String password);
 
 		@GET("/sign/duplitcation")
@@ -219,9 +214,8 @@ public class UserService extends BaseService {
 		Observable<BotResponse> setProfilePhotos(@Body BotRequest req);
 
 
-
 		@FormUrlEncoded
-		@POST("/sign/up")
+		@POST("/auth/signup")
 		Observable<ResponseBody> signUp(@Field("name") String name, @Field("email") String email, @Field("password") String password);
 	}
 }

@@ -2,19 +2,54 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="me.unithon.helpmebot">
 
+    <!-- 유저 퍼미션 추가 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
+        android:name=".util.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_roler"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/MyTheme">
+=======
+        android:theme="@style/NoAppBarTheme">
+>>>>>>> 1f77a1455b2891fd3c768e7150c0cf2bf46b0783
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity
+            android:name=".signup.SignUpProfileActivity"
+            android:theme="@style/NoAppBarTheme">
+        </activity>
+
+        <activity android:name=".signup.SignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
+                  android:label="OAuth2.0 In-app"/>
+
+
     </application>
 
 </manifest>

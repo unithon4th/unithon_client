@@ -1,6 +1,5 @@
 package me.unithon.helpmebot.signup;
 
-import com.buttering.roler.VO.User;
 
 import java.io.File;
 
