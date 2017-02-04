@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/activity_sign_up__profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 tools:context="me.unithon.helpmebot.signup.SignUpProfileActivity">
 
     <include
@@ -11,6 +12,210 @@
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기본정보"
+                android:textSize="12sp"
+                android:textColor="#9f9f9f"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="#2f762e"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="성명"/>
+                    <EditText
+                        android:background="@null"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textColor="#1f1f1f"
+                        android:hint="홍길동"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text=""/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="1dp"
+                    android:background="#979797"
+                    />
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="#2f762e"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="생년월일"/>
+                    <EditText
+                        android:background="@null"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textColor="#1f1f1f"
+                        android:hint="YYYY.MM.DD"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text=""/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#979797"
+                />
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_marginRight="15dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/male_act"/>
+
+            <ImageButton
+                android:layout_marginLeft="15dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/female_act"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="계좌정보"
+                android:textSize="12sp"
+                android:textColor="#9f9f9f"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="#2f762e"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="은행"/>
+                    <EditText
+                        android:background="@null"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textColor="#1f1f1f"
+                        android:hint="머니은행"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text=""/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="1dp"
+                    android:background="#979797"
+                    />
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="#2f762e"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="계좌번호"/>
+                    <EditText
+                        android:background="@null"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textColor="#1f1f1f"
+                        android:hint="0000-00-0000-00"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text=""/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#979797"
+                    />
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -162,4 +367,4 @@
         android:text="완료"
         android:textColor="@color/white"/>
 
-</RelativeLayout>
+</LinearLayout>

@@ -66,8 +66,8 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 	@BindView(R.id.activity_signup_profile_btn_female)
 	Button activity_signup_profile_btn_female;
 
-	@BindView(R.id.accountNuber)
-	EditText accountNuber;
+//	@BindView(R.id.accountNuber)
+//	EditText accountNuber;
 
 	public String email;
 	public String passwd;
@@ -115,6 +115,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_up_profile);
+		/*
 		ButterKnife.bind(this);
 		checkThePemission();
 
@@ -131,13 +132,13 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 		presenter = new SignUpProfilePresenter(this);
 
-		setGender();
+		setGender();*/
 
 	}
 
 	private void checkAccountNumber() {
 
-		isCheckAccountNumber(accountNuber.getText().toString());
+//		isCheckAccountNumber(accountNuber.getText().toString());
 	}
 
 	private void setToolbar() {
