@@ -26,8 +26,8 @@
             android:layout_alignParentTop="true"
             android:orientation="vertical"
             android:paddingBottom="25dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:paddingTop="25dp">
 
             <LinearLayout
@@ -68,38 +68,29 @@
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
-                <EditText
+                <TextView
+                    android:textColor="@color/main"
                     android:id="@+id/activity_signup_profile_firstName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="First Name"
+                    android:hint="성명"
                     android:singleLine="true"/>
 
                 <EditText
                     android:id="@+id/activity_signup_profile_lastName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Last Name"
+                    android:layout_weight="5"
+                    android:hint="홍길동"
                     android:singleLine="true"/>
 
             </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/accountName"
-                    android:hint="신한 or 신한은행"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <EditText
-                    android:id="@+id/accountNuber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint=" 계좌번호를 적어주세요 ex) 110307006580"/>
-            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/hard_grey"/>
 
 
             <LinearLayout
@@ -109,21 +100,17 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/name_layout"
                 android:layout_marginTop="22dp">
-                <!--<EditText-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:hint="Birthday"/>-->
-                <!--<DatePicker-->
-                <!--android:id="@+id/simpleDatePicker"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="188dp"-->
-                <!--android:datePickerMode="spinner" />-->
+               <TextView
+                   android:layout_weight="1"
+                   android:text="생년월일"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"/>
                 <EditText
+                    android:layout_weight="5"
                     android:id="@+id/activity_sign_up_profile_edt_birthDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Touch here to select a birthday"
-                    android:textSize="20sp"/>
+                    android:hint="Touch to select a birthday"/>
             </LinearLayout>
 
             <LinearLayout
@@ -171,8 +158,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#e60000"
-        android:text="NEXT"
+        android:background="@color/body_background_green"
+        android:text="완료"
         android:textColor="@color/white"/>
 
 </RelativeLayout>

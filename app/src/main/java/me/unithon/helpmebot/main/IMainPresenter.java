@@ -7,5 +7,5 @@ import rx.Observable;
  */
 
 public interface IMainPresenter {
-	Observable<String> sendString(String userId, String chatText);
+	Observable<Void> sendString(String userId, String chatText);
 }

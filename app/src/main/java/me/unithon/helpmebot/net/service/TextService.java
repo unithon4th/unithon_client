@@ -34,14 +34,14 @@ public class TextService extends BaseService {
 		return (TextAPI) super.getAPI();
 	}
 
-	public Observable<String> sendText(String userId, String chatText) {
+	public Observable<Void> sendText(String userId, String chatText) {
 		return Observable.create(subscriber -> {
 			getAPI().sendText(userId, chatText)
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
 						public void onCompleted() {
-
+							unsubscribe();
 						}
 
 						@Override
@@ -55,7 +55,7 @@ public class TextService extends BaseService {
 							try {
 								String result = parseParams(responseBody.string());
 								if (result.equals("success")) {
-									subscriber.onCompleted();
+									subscriber.onNext(null);
 
 								} else {
 									subscriber.onError(new Throwable());
@@ -77,18 +77,26 @@ public class TextService extends BaseService {
 
 							String speech = ja.getAsJsonObject("data").getAsJsonPrimitive("speech").getAsString();
 
-
-							String money = ja.get("data").getAsJsonObject().get("parameters")
-									.getAsJsonObject().get("money").getAsString();
-
-							String name = ja.get("data").getAsJsonObject().get("parameters")
-									.getAsJsonObject().get("name").getAsString();
+//
+//							Boolean checkMoney = ja.get("data").getAsJsonObject().get("parameters")
+//									.getAsJsonObject().get("money").isJsonNull();
+//							if(checkMoney){
+//								String money = ja.get("data").getAsJsonObject().get("parameters")
+//										.getAsJsonObject().get("money").getAsString();
+//								SharePrefUtil.putSharedPreference("money", money);
+//							}
+//
+//							Boolean checkName =  ja.get("data").getAsJsonObject().get("parameters")
+//									.getAsJsonObject().get("name").isJsonNull();
+//							if(checkName){
+//								String name = ja.get("data").getAsJsonObject().get("parameters")
+//										.getAsJsonObject().get("name").getAsString();
+//								SharePrefUtil.putSharedPreference("name", name);
+//							}
 
 							SharePrefUtil.putSharedPreference("action", action);
 							SharePrefUtil.putSharedPreference("query", query);
 							SharePrefUtil.putSharedPreference("speech", speech);
-							SharePrefUtil.putSharedPreference("money", money);
-							SharePrefUtil.putSharedPreference("name", name);
 
 
 							return result;

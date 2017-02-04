@@ -13,13 +13,15 @@ public class MainPresenter extends BasePresenter implements IMainPresenter {
 
 	private TextService textService;
 
+
+
 	public MainPresenter(){
 		textService = new TextService();
 	}
 
 
 	@Override
-	public Observable<String> sendString(String userId, String chatText) {
+	public Observable<Void> sendString(String userId, String chatText) {
 
 		return textService
 				.sendText(userId,chatText)
