@@ -197,7 +197,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:textColor="#1f1f1f"
-                        android:hint="0000-00-0000-00"
+                        android:hint="계좌번호 입력"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:text=""/>
@@ -212,6 +212,20 @@
 
 
 
+            <LinearLayout
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:background="#d0e6ce"
+                android:layout_height="36dp">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="완료"
+                    android:textColor="#efefef"
+                    android:background="#00000000"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
