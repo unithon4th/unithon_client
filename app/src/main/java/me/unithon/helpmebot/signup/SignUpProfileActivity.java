@@ -147,7 +147,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);
 		imageView.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 		textView.setTextColor(Color.BLACK);
-		textView.setText("회원 가입 세부 입력");
+		textView.setText("회원가입 세부입력");
 		setSupportActionBar(toolbar);
 
 		imageView.setOnClickListener(view -> {

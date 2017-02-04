@@ -24,6 +24,7 @@ import me.unithon.helpmebot.R;
 import me.unithon.helpmebot.setting.SettingActivity;
 import me.unithon.helpmebot.util.SharePrefUtil;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by kinamare on 2017-02-05.
@@ -82,10 +83,19 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
 			presenter = new MainPresenter();
 			presenter.sendString("kozy@naver.com", text)
-					.subscribe(new Subscriber<String>() {
+					.subscribe(new Subscriber<Void>() {
 						@Override
 						public void onCompleted() {
-							unsubscribe();
+
+//							String name = SharePrefUtil.getSharedPreference("name");
+//							String money = SharePrefUtil.getSharedPreference("money");
+//							String query = SharePrefUtil.getSharedPreference("query");
+							String speech = SharePrefUtil.getSharedPreference("speech");
+							m_Adapter.add(speech, 0);
+							m_Adapter.notifyDataSetChanged();
+							hideLoadingBar();
+
+
 
 						}
 
@@ -95,17 +105,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 						}
 
 						@Override
-						public void onNext(String s) {
+						public void onNext(Void s) {
 
-							String name = SharePrefUtil.getSharedPreference("name");
-							String money = SharePrefUtil.getSharedPreference("money");
-							String query = SharePrefUtil.getSharedPreference("query");
-							String speech = SharePrefUtil.getSharedPreference("speech");
-							m_Adapter.add(speech, 0);
-							m_Adapter.notifyDataSetChanged();
-							hideLoadingBar();
-
-							onCompleted();
 
 						}
 					});
