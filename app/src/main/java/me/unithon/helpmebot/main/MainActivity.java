@@ -13,20 +13,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
 import me.unithon.helpmebot.R;
+import me.unithon.helpmebot.login.LogInActivity;
 import me.unithon.helpmebot.setting.SettingActivity;
 import me.unithon.helpmebot.util.SharePrefUtil;
+import me.unithon.helpmebot.vo.MyInfoDAO;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by kinamare on 2017-02-05.
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 	@BindView(R.id.edit_text)
 	EditText edit_text;
 
+
 	private IMainPresenter presenter;
 
 
@@ -54,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
 		setToolbar();
+
+		Toast.makeText(this, SharePrefUtil.getSharedPreference("naverName")+"님 안녕하세요", Toast.LENGTH_SHORT).show();
 
 		m_Adapter = new CustomAdapter();
 
@@ -69,23 +75,52 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 		//0번 서버
 		//2 날짜
 		m_Adapter.add(date, 2);
+		m_Adapter.notifyDataSetChanged();
 
 		sendToServer();
-
-		isClosed();
-
 
 	}
 
 	private void sendToServer() {
 		btn_send.setOnClickListener(v -> {
+			presenter = new MainPresenter();
 
 			String text = edit_text.getText().toString();
 			m_Adapter.add(text, 1);
 			m_Adapter.notifyDataSetChanged();
 			showLoadingBar();
 
-			presenter = new MainPresenter();
+			if (text.contains("조회")) {
+				presenter.getList()
+						.subscribe(new Subscriber<List<String>>() {
+							@Override
+							public void onCompleted() {
+//								String id = SharePrefUtil.getSharedPreference("bankId");
+//								String timestamp = SharePrefUtil.getSharedPreference("bankTime");
+//								String bankAmount = SharePrefUtil.getSharedPreference("bankAmount");
+//								String bankToId = SharePrefUtil.getSharedPreference("bankToId");
+//								String bankRecordId = SharePrefUtil.getSharedPreference("bankRecordId");
+
+							}
+
+							@Override
+							public void onError(Throwable e) {
+								e.printStackTrace();
+							}
+
+							@Override
+							public void onNext(List<String> string) {
+								for (int i = 0; i< string.size(); i++){
+									m_Adapter.add(string.get(i),0);
+								}
+								m_Adapter.notifyDataSetChanged();
+								hideLoadingBar();
+								edit_text.setText("");
+
+							}
+						});
+			} else {
+
 			presenter.sendString("kozy@naver.com", text)
 					.subscribe(new Subscriber<Void>() {
 						@Override
@@ -95,21 +130,26 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 							String money = SharePrefUtil.getSharedPreference("money");
 //							String query = SharePrefUtil.getSharedPreference("query");
 							String speech = SharePrefUtil.getSharedPreference("speech");
-							if(speech.equals("송금하시겠습니까?")){
+							if (speech.equals("송금하시겠습니까?")) {
 								AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-								alert.setMessage(name+"님에게"+money+"를 송금하시겠습니까?").setCancelable(false)
+								alert.setMessage(name + " 님에게 " + money + "를 송금하시겠습니까?").setCancelable(false)
 										.setPositiveButton("확인", new DialogInterface.OnClickListener() {
 											@Override
 											public void onClick(DialogInterface dialog, int which) {
-												presenter.withdrawMoney(name, ,money)
+												presenter.withdrawMoney(name, MyInfoDAO.getInstance().getAccountNumber(), Integer.valueOf(money))
 														.subscribe(new Subscriber<Void>() {
 															@Override
 															public void onCompleted() {
+																String price = SharePrefUtil.getSharedPreference("price");
+																m_Adapter.add("송금 완료", 0);
+																m_Adapter.add(price + "금액 남았습니다.", 0);
+																m_Adapter.notifyDataSetChanged();
 
 															}
 
 															@Override
 															public void onError(Throwable e) {
+																e.printStackTrace();
 
 															}
 
@@ -118,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
 															}
 														});
-												finish();
 											}
 										})
 										.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -135,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 							m_Adapter.add(speech, 0);
 							m_Adapter.notifyDataSetChanged();
 							hideLoadingBar();
-
+							edit_text.setText("");
 
 
 						}
@@ -151,6 +190,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
 						}
 					});
+
+		}
 
 		});
 
@@ -209,7 +250,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 			dialog.dismiss();
 	}
 
-	public void isClosed(){
+	@Override
+	public void onBackPressed() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setMessage("돈톡를 종료 하시겠습니까?").setCancelable(false)
 				.setPositiveButton("확인", new DialogInterface.OnClickListener() {

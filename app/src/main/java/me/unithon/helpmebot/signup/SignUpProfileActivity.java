@@ -50,21 +50,29 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int RUQUEST_IMAGE_FROM_ALBUM = 5;
 
-	@BindView(R.id.activity_signup_circleview)
-	de.hdodenhof.circleimageview.CircleImageView circleImageView;
+//	@BindView(R.id.activity_signup_circleview)
+//	de.hdodenhof.circleimageview.CircleImageView circleImageView;
+//
+//	@BindView(R.id.activity_signup_btn_next)
+//	Button activity_signup_btn_next;
+//
+//
+//	@BindView(R.id.activity_signup_profile_btn_male)
+//	Button activity_signup_profile_btn_male;
+//	@BindView(R.id.activity_signup_profile_btn_female)
+//	Button activity_signup_profile_btn_female;
 
-	@BindView(R.id.activity_signup_btn_next)
-	Button activity_signup_btn_next;
+	@BindView(R.id.activity_main_name_edt)
+	EditText name_edt;
 
-	@BindView(R.id.activity_signup_profile_firstName)
-	EditText activity_signup_profile_firstName;
-	@BindView(R.id.activity_signup_profile_lastName)
-	EditText activity_signup_profile_lastName;
+	@BindView(R.id.activity_main_accountName_edt)
+	EditText accountName_edt;
 
-	@BindView(R.id.activity_signup_profile_btn_male)
-	Button activity_signup_profile_btn_male;
-	@BindView(R.id.activity_signup_profile_btn_female)
-	Button activity_signup_profile_btn_female;
+	@BindView(R.id.activity_main_accountNumber)
+	EditText accountNumber;
+
+	@BindView(R.id.activity_sign_up_profile_btn)
+	Button done_btn;
 
 
 	public String email;
@@ -113,12 +121,13 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_up_profile);
+
 		ButterKnife.bind(this);
 		checkThePemission();
 
 		setToolbar();
 
-		circleImageView.setOnClickListener(v -> takepicture());
+//		circleImageView.setOnClickListener(v -> takepicture());
 
 		Intent intent = getIntent();
 		email = intent.getExtras().getString("email");
@@ -129,13 +138,12 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 
 		presenter = new SignUpProfilePresenter(this);
 
-		setGender();
+//		setGender();
 
 	}
 
 	private void checkAccountNumber() {
-
-//		isCheckAccountNumber(accountNuber.getText().toString());
+		isCheckAccountNumber(accountNumber.getText().toString());
 	}
 
 	private void setToolbar() {
@@ -162,97 +170,95 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 	}
 
 
-	private void setGender() {
-		activity_signup_profile_btn_male.setOnClickListener(view -> {
-			if (isMaleCheck) {
-				isMaleCheck = false;
-				activity_signup_profile_btn_male.setBackgroundColor(Color.parseColor("#508b999b"));
-			} else {
-				isMaleCheck = true;
-				activity_signup_profile_btn_male.setTextColor(Color.WHITE);
-				activity_signup_profile_btn_male.setBackgroundColor(Color.BLACK);
-				isFemaleCheck = false;
-				activity_signup_profile_btn_female.setBackgroundColor(Color.parseColor("#508b999b"));
-
-			}
-
-		});
-		activity_signup_profile_btn_female.setOnClickListener(view -> {
-
-			if (isFemaleCheck) {
-				isFemaleCheck = false;
-				activity_signup_profile_btn_female.setBackgroundColor(Color.parseColor("#508b999b"));
-			} else {
-				isFemaleCheck = true;
-				activity_signup_profile_btn_female.setTextColor(Color.WHITE);
-				activity_signup_profile_btn_female.setBackgroundColor(Color.BLACK);
-				isMaleCheck = false;
-				activity_signup_profile_btn_male.setBackgroundColor(Color.parseColor("#508b999b"));
-			}
-
-		});
-
-
-	}
+//	private void setGender() {
+//		activity_signup_profile_btn_male.setOnClickListener(view -> {
+//			if (isMaleCheck) {
+//				isMaleCheck = false;
+//				activity_signup_profile_btn_male.setBackgroundColor(Color.parseColor("#508b999b"));
+//			} else {
+//				isMaleCheck = true;
+//				activity_signup_profile_btn_male.setTextColor(Color.WHITE);
+//				activity_signup_profile_btn_male.setBackgroundColor(Color.BLACK);
+//				isFemaleCheck = false;
+//				activity_signup_profile_btn_female.setBackgroundColor(Color.parseColor("#508b999b"));
+//
+//			}
+//
+//		});
+//		activity_signup_profile_btn_female.setOnClickListener(view -> {
+//
+//			if (isFemaleCheck) {
+//				isFemaleCheck = false;
+//				activity_signup_profile_btn_female.setBackgroundColor(Color.parseColor("#508b999b"));
+//			} else {
+//				isFemaleCheck = true;
+//				activity_signup_profile_btn_female.setTextColor(Color.WHITE);
+//				activity_signup_profile_btn_female.setBackgroundColor(Color.BLACK);
+//				isMaleCheck = false;
+//				activity_signup_profile_btn_male.setBackgroundColor(Color.parseColor("#508b999b"));
+//			}
+//
+//		});
+//
+//
+//	}
 
 	private void setLayoutInit() {
-		activity_signup_btn_next.setOnClickListener(view -> {
+		done_btn.setOnClickListener(view -> {
 
-			String firstName = activity_signup_profile_firstName.getText().toString();
-			String lastName = activity_signup_profile_lastName.getText().toString();
-			String fullName = firstName + lastName;
+			String accountName = accountName_edt.getText().toString();
+			String accountNumber = name_edt.getText().toString();
 
-			if (isValid(firstName, lastName)) {
-				presenter
-						.signUp(email, passwd, fullName)
-						.flatMap(user -> {
-							MyInfoDAO.getInstance().setMyUserInfo(user);
-							MyInfoDAO.getInstance().saveAccountInfo(MyInfoDAO.getInstance().getUserId(), email, passwd, fullName, "NULL");
-							return null;
-						})
-						.subscribe(new Subscriber<Object>() {
-							@Override
-							public void onCompleted() {
+			presenter
+					.signUp(email, passwd, accountNumber, accountName)
+					.flatMap(user -> {
+						MyInfoDAO.getInstance().setMyUserInfo(user);
+						MyInfoDAO.getInstance().saveAccountInfo(MyInfoDAO.getInstance().getUserId(), email, passwd, "신현성", "NULL", accountName, accountNumber);
+						return null;
+					})
+					.subscribe(new Subscriber<Object>() {
+						@Override
+						public void onCompleted() {
 
-								if (imgfile != null) {
-									presenter.uploadProfileImg(imgfile)
-											.subscribe(new Subscriber<String>() {
-												@Override
-												public void onCompleted() {
-													unsubscribe();
-												}
+							if (imgfile != null) {
+								presenter.uploadProfileImg(imgfile)
+										.subscribe(new Subscriber<String>() {
+											@Override
+											public void onCompleted() {
+												unsubscribe();
+											}
 
-												@Override
-												public void onError(Throwable e) {
-													e.printStackTrace();
-												}
+											@Override
+											public void onError(Throwable e) {
+												e.printStackTrace();
+											}
 
-												@Override
-												public void onNext(String s) {
-													onCompleted();
-												}
-											});
-								}
-
-								hideLoadingBar();
-								SharePrefUtil.putSharedPreference("isLoggedIn", true);
-								Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-								startActivity(intent);
-								finish();
+											@Override
+											public void onNext(String s) {
+												onCompleted();
+											}
+										});
 							}
 
-							@Override
-							public void onError(Throwable e) {
-								e.printStackTrace();
-							}
+							hideLoadingBar();
+							SharePrefUtil.putSharedPreference("isLoggedIn", true);
+							Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+							startActivity(intent);
+							finish();
+						}
 
-							@Override
-							public void onNext(Object o) {
+						@Override
+						public void onError(Throwable e) {
+							e.printStackTrace();
+						}
+
+						@Override
+						public void onNext(Object o) {
 
 
-							}
-						});
-			}
+						}
+					});
+
 
 		});
 
@@ -363,74 +369,74 @@ public class SignUpProfileActivity extends AppCompatActivity implements ISignUpP
 		return image;
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-			case RUQUEST_IMAGE_FROM_ALBUM: {
-				if (resultCode == Activity.RESULT_OK) {
-					Uri imageUri = data.getData();
-					try {
-						bp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-
-					SaveBitmapToFileCache(bp, imgfile.getAbsolutePath());
-					circleImageView.setImageBitmap(resizeBitmap(bp, 2048));
-
-					break;
-				} else {
-					finish();
-				}
-			}
-			case REQUEST_IMAGE_CAPTURE: {
-				if (resultCode == Activity.RESULT_OK) {
-
-					try {
-						bp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-
-					Matrix matrix = new Matrix();
-					ExifInterface ei = null;
-					try {
-						ei = new ExifInterface(imgfile.getAbsolutePath());
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-
-					int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-							ExifInterface.ORIENTATION_NORMAL);
-
-					switch (orientation) {
-						case 1:
-							break;
-						case 6:
-							matrix.postRotate(90);
-							break;
-						case 8:
-							matrix.postRotate(-90);
-							break;
-						default:
-							matrix.postRotate(90);
-							break;
-					}
-
-					if (bp != null) {
-						Bitmap rotatedBitmap = Bitmap.createBitmap(bp, 0, 0, bp.getWidth(), bp.getHeight(), matrix, true);
-						circleImageView.setImageBitmap(resizeBitmap(rotatedBitmap, 2048));
-						SaveBitmapToFileCache(bp, imgfile.getAbsolutePath());
-
-					}
-				} else {
-					finish();
-				}
-			}
-		}
-
-	}
+//	@Override
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		super.onActivityResult(requestCode, resultCode, data);
+//		switch (requestCode) {
+//			case RUQUEST_IMAGE_FROM_ALBUM: {
+//				if (resultCode == Activity.RESULT_OK) {
+//					Uri imageUri = data.getData();
+//					try {
+//						bp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//
+//					SaveBitmapToFileCache(bp, imgfile.getAbsolutePath());
+//					circleImageView.setImageBitmap(resizeBitmap(bp, 2048));
+//
+//					break;
+//				} else {
+//					finish();
+//				}
+//			}
+//			case REQUEST_IMAGE_CAPTURE: {
+//				if (resultCode == Activity.RESULT_OK) {
+//
+//					try {
+//						bp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//
+//					Matrix matrix = new Matrix();
+//					ExifInterface ei = null;
+//					try {
+//						ei = new ExifInterface(imgfile.getAbsolutePath());
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//
+//					int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+//							ExifInterface.ORIENTATION_NORMAL);
+//
+//					switch (orientation) {
+//						case 1:
+//							break;
+//						case 6:
+//							matrix.postRotate(90);
+//							break;
+//						case 8:
+//							matrix.postRotate(-90);
+//							break;
+//						default:
+//							matrix.postRotate(90);
+//							break;
+//					}
+//
+//					if (bp != null) {
+//						Bitmap rotatedBitmap = Bitmap.createBitmap(bp, 0, 0, bp.getWidth(), bp.getHeight(), matrix, true);
+//						circleImageView.setImageBitmap(resizeBitmap(rotatedBitmap, 2048));
+//						SaveBitmapToFileCache(bp, imgfile.getAbsolutePath());
+//
+//					}
+//				} else {
+//					finish();
+//				}
+//			}
+//		}
+//
+//	}
 
 
 	@Override

@@ -34,21 +34,22 @@ public class SignUpProfilePresenter extends BasePresenter implements ISignUpProf
 
 
 	@Override
-	public Observable<User> signUp(String email, String pwd, String name) {
+	public Observable<User> signUp(String email, String pwd, String account,String bank) {
 		view.showLoadingBar();
 
-		User user = generateUser(email, pwd, name);
+		User user = generateUser(email, pwd, account,bank);
 
 		return userService
 				.signUp(user)
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 
-	private User generateUser(String email, String pwd, String name) {
+	private User generateUser(String email, String pwd, String name, String bank) {
 		User user = new User();
 		user.setEmail(email);
 		user.setPassword(pwd);
 		user.setName(name);
+		user.setBank(bank);
 		return user;
 	}
 

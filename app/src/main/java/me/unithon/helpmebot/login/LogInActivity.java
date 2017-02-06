@@ -15,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +26,21 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
+import com.squareup.picasso.Picasso;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,6 +92,25 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
 	@BindView(R.id.pw_et)
 	TextView pw_et;
+
+	@BindView(R.id.imvLoginLogo)
+	ImageView imvLogo;
+
+	@BindView(R.id.activity_login_id)
+	EditText login_id;
+
+	@BindView(R.id.activity_login_password)
+	EditText login_password;
+
+	@BindView(R.id.btnLoginProc)
+	Button btnLoginProc;
+
+	@BindView(R.id.btnLoginSignup)
+	Button btnLoginSignup;
+
+
+	@BindView(R.id.imvLoginBack)
+	ImageView imvBack;
 
 	private GoogleApiClient mGoogleApiClient;
 
@@ -140,6 +172,21 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		initLoginSetting();
 		initFbService();
 
+		init();
+
+
+	}
+
+	void init() {
+		Picasso.with(getBaseContext())
+				.load(R.drawable.landing_sejong)
+				.fit()
+				.into(imvLogo);
+
+		Picasso.with(getBaseContext())
+				.load(R.drawable.b_g)
+				.fit()
+				.into(imvBack);
 	}
 
 
@@ -180,16 +227,16 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 		OAuthLoginButton mOAuthLoginButton = (OAuthLoginButton) findViewById(R.id.buttonOAuthLoginImg);
 		mOAuthLoginButton.setOAuthLoginHandler(mOAuthLoginHandler);
 
-		login_signUp_btn.setOnClickListener(v -> {
+		btnLoginSignup.setOnClickListener(v -> {
 			Intent intent = new Intent(this, SignUpActivity.class);
 			startActivity(intent);
 		});
 
-		login_signIn_btn.setOnClickListener(new View.OnClickListener() {
+		btnLoginProc.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String email = email_et.getText().toString();
-				String pwd = pw_et.getText().toString();
+				String email = login_id.getText().toString();
+				String pwd = login_password.getText().toString();
 				if (isValid(email, pwd)) {
 					loginPresenter.signIn(email, pwd)
 							.subscribe(new Subscriber<String>() {
@@ -280,24 +327,62 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 				String refreshToken = mOAuthLoginModule.getRefreshToken(getApplicationContext());
 				long expiresAt = mOAuthLoginModule.getExpiresAt(getApplicationContext());
 				String tokenType = mOAuthLoginModule.getTokenType(getApplicationContext());
-				Toast.makeText(getApplicationContext(), accessToken + refreshToken + expiresAt + tokenType, Toast.LENGTH_SHORT).show();
-				loginPresenter.sendToken(accessToken,refreshToken,tokenType,OAUTH_CLIENT_NAME)
-				.subscribe(new Subscriber<Void>() {
-					@Override
-					public void onCompleted() {
+//				Toast.makeText(getApplicationContext(), accessToken + refreshToken + expiresAt + tokenType, Toast.LENGTH_SHORT).show();
+				loginPresenter.sendToken(accessToken, refreshToken, tokenType, OAUTH_CLIENT_NAME)
+						.subscribe(new Subscriber<Void>() {
+							@Override
+							public void onCompleted() {
 
+							}
+
+							@Override
+							public void onError(Throwable e) {
+								e.printStackTrace();
+							}
+
+							@Override
+							public void onNext(Void aVoid) {
+
+							}
+						});
+
+
+				new Thread() {
+					@Override
+					public void run() {
+						String token = accessToken;// 네이버 로그인 접근 토큰;
+						String header = "Bearer " + token; // Bearer 다음에 공백 추가
+						try {
+							String apiURL = "https://openapi.naver.com/v1/nid/me";
+							URL url = new URL(apiURL);
+							HttpURLConnection con = (HttpURLConnection) url.openConnection();
+							con.setRequestMethod("GET");
+							con.setRequestProperty("Authorization", header);
+							int responseCode = con.getResponseCode();
+							BufferedReader br;
+							if (responseCode == 200) { // 정상 호출
+								br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+							} else {  // 에러 발생
+								br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+							}
+							String inputLine;
+							StringBuffer response = new StringBuffer();
+							while ((inputLine = br.readLine()) != null) {
+								response.append(inputLine);
+							}
+							br.close();
+							System.out.println(response.toString());
+							String res = response.toString();
+							JsonObject ja = new JsonParser().parse(res).getAsJsonObject();
+							String name = ja.getAsJsonObject("response").getAsJsonPrimitive("nickname").getAsString();
+							SharePrefUtil.putSharedPreference("naverName",name);
+						} catch (Exception e) {
+							System.out.println(e);
+						}
 					}
 
-					@Override
-					public void onError(Throwable e) {
-						e.printStackTrace();
-					}
+				}.start(); //스레드 실행
 
-					@Override
-					public void onNext(Void aVoid) {
-
-					}
-				});
 				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 				startActivity(intent);
 				finish();

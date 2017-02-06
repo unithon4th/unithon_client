@@ -49,7 +49,7 @@ public class UserService extends BaseService {
 		return Observable.create(subscriber -> {
 
 			getAPI()
-					.signUp(user.getName(), user.getEmail(), user.getPassword())
+					.signUp(user.getEmail(),user.getPassword() ,Integer.valueOf(user.getAccountNumber()),user.getBank())
 					.subscribeOn(Schedulers.io())
 					.subscribe(new Subscriber<ResponseBody>() {
 						@Override
@@ -70,7 +70,6 @@ public class UserService extends BaseService {
 							try {
 								String result = parseParams(responseBody.string());
 								if (result.equals("success")) {
-									MyInfoDAO.getInstance().saveAccountInfo(userId, user.getEmail(), user.getPassword(), user.getName(), "NULL");
 									subscriber.onNext(user);
 
 								} else {
@@ -171,7 +170,7 @@ public class UserService extends BaseService {
 						public void onNext(ResponseBody responseBody) {
 							try {
 								String result = parseParams(responseBody.string());
-								if (result.equals("true")) {
+								if (result.equals("success")) {
 									subscriber.onCompleted();
 
 								} else {
@@ -216,7 +215,7 @@ public class UserService extends BaseService {
 
 						@Override
 						public void onError(Throwable e) {
-
+							e.printStackTrace();
 						}
 
 						@Override
@@ -266,7 +265,8 @@ public class UserService extends BaseService {
 
 		@FormUrlEncoded
 		@POST("/auth/signup")
-		Observable<ResponseBody> signUp(@Field("name") String name, @Field("email") String email, @Field("password") String password);
+		Observable<ResponseBody> signUp(@Field("username") String username, @Field("password") String password, @Field("account") int account
+				,@Field("bank")String bank);
 
 		@FormUrlEncoded
 		@POST("/auth/naver")

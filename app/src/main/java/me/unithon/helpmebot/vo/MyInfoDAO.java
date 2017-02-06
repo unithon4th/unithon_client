@@ -44,6 +44,16 @@ public class MyInfoDAO {
 		preferences.put("userId",id);
 	}
 
+
+	public  void setAccountName(String accountName){
+		preferences.put("accountName",accountName);
+	}
+
+
+	public  void setAccountNumber(String accountNumber){
+		preferences.put("accountNumber",accountNumber);
+	}
+
 	public void setPwd(String pwd) {
 		preferences.put("pwd", pwd);
 	}
@@ -79,12 +89,14 @@ public class MyInfoDAO {
 		SharePrefUtil.putSharedPreference("myUserInfo", json);
 	}
 
-	public void saveAccountInfo(String userId, String email, String pwd, String name, String picURL) {
+	public void saveAccountInfo(String userId, String email, String pwd, String name, String picURL,String accountName, String accountNumber) {
 		setEmail(email);
 		setPwd(pwd);
 		setName(name);
 		setPicUrl(picURL);
 		setUserId(userId);
+		setAccountName(accountName);
+		setAccountNumber(accountNumber);
 	}
 
 
@@ -121,6 +133,14 @@ public class MyInfoDAO {
 
 	public String getUserId(){
 		return preferences.getString("userId");
+	}
+
+	public String getAccountNumber(){
+		return preferences.getString("accountNumber");
+	}
+
+	public String getAccountName(){
+		return preferences.getString("accountName");
 	}
 
 

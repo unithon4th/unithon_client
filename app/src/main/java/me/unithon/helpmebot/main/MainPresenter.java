@@ -1,5 +1,7 @@
 package me.unithon.helpmebot.main;
 
+import java.util.List;
+
 import me.unithon.helpmebot.net.presenter.BasePresenter;
 import me.unithon.helpmebot.net.service.TextService;
 import rx.Observable;
@@ -32,6 +34,13 @@ public class MainPresenter extends BasePresenter implements IMainPresenter {
 	public Observable<Void> withdrawMoney(String userId, String accountNumber, int amount) {
 		return textService
 				.withdrawMoney(userId, accountNumber, amount)
+				.observeOn(AndroidSchedulers.mainThread());
+	}
+
+	@Override
+	public Observable<List<String>> getList() {
+		return textService
+				.getList()
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 

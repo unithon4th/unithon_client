@@ -126,7 +126,7 @@ public class SettingActivity extends AppCompatActivity {
 	}
 
 	private void setToolbar() {
-		Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolBar);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
 		toolbar.setBackgroundResource(R.color.main);
 		TextView textView = (TextView) findViewById(R.id.toolbar_title);
 		ImageView imageView = (ImageView) findViewById(R.id.toolBar_image);

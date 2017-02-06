@@ -12,6 +12,16 @@ public class User implements Serializable{
 	private String password;
 	private String picture_url;
 
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+
+	private String bank;
+
 	public String getAccountNumber() {
 		return accountNumber;
 	}

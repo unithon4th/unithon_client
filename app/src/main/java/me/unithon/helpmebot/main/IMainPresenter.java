@@ -1,5 +1,7 @@
 package me.unithon.helpmebot.main;
 
+import java.util.List;
+
 import rx.Observable;
 
 /**
@@ -9,4 +11,5 @@ import rx.Observable;
 public interface IMainPresenter {
 	Observable<Void> sendString(String userId, String chatText);
 	Observable<Void> withdrawMoney(String userId, String accountNumber,int amount);
+	Observable<List<String>> getList();
 }

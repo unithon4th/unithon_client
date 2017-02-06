@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.unithon.helpmebot.R;
@@ -22,30 +23,32 @@ import me.unithon.helpmebot.R;
  */
 
 public class CustomAdapter extends BaseAdapter {
-	public class ListContents{
+	public class ListContents {
 		String msg;
 		int type;
-		ListContents(String _msg,int _type)
-		{
+
+		ListContents(String _msg, int _type) {
 			this.msg = _msg;
 			this.type = _type;
 		}
 	}
 
 	private ArrayList<ListContents> m_List;
+
 	public CustomAdapter() {
 		m_List = new ArrayList<ListContents>();
 	}
 
-	public void add(String _msg,int _type) {
+	public void add(String _msg, int _type) {
 
-		m_List.add(new ListContents(_msg,_type));
+		m_List.add(new ListContents(_msg, _type));
 	}
 
 
 	public void remove(int _position) {
 		m_List.remove(_position);
 	}
+
 	@Override
 	public int getCount() {
 		return m_List.size();
@@ -66,63 +69,66 @@ public class CustomAdapter extends BaseAdapter {
 		final int pos = position;
 		final Context context = parent.getContext();
 
-		TextView text    = null;
-		CustomHolder    holder  = null;
-		LinearLayout layout  = null;
-		View            viewRight = null;
+		TextView text = null;
+		CustomHolder holder = null;
+		LinearLayout layout = null;
+		View viewRight = null;
 		View viewLeft = null;
 		CircleImageView imageView = null;
+		Random random = new Random();
 
 
-		if ( convertView == null ) {
+		if (convertView == null) {
 
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.activity_chatitem, parent, false);
 
-			layout    = (LinearLayout) convertView.findViewById(R.id.layout);
-			text    = (TextView) convertView.findViewById(R.id.text);
-			viewRight    = (View) convertView.findViewById(R.id.imageViewright);
-			viewLeft    = (View) convertView.findViewById(R.id.imageViewleft);
-			imageView = (CircleImageView)convertView.findViewById(R.id.categoryImage);
+			layout = (LinearLayout) convertView.findViewById(R.id.layout);
+			text = (TextView) convertView.findViewById(R.id.text);
+			viewRight = convertView.findViewById(R.id.imageViewright);
+			viewLeft = convertView.findViewById(R.id.imageViewleft);
+			imageView = (CircleImageView) convertView.findViewById(R.id.categoryImage);
 
 
 			holder = new CustomHolder();
-			holder.m_TextView   = text;
+			holder.m_TextView = text;
 			holder.layout = layout;
 			holder.viewRight = viewRight;
 			holder.viewLeft = viewLeft;
-			holder.imageView =  imageView;
+			holder.imageView = imageView;
 			convertView.setTag(holder);
-		}
-		else {
-			holder  = (CustomHolder) convertView.getTag();
-			text    = holder.m_TextView;
-			layout  = holder.layout;
+		} else {
+			holder = (CustomHolder) convertView.getTag();
+			text = holder.m_TextView;
+			layout = holder.layout;
 			viewRight = holder.viewRight;
 			viewLeft = holder.viewLeft;
 			imageView = holder.imageView;
 
 		}
 
-
 		text.setText(m_List.get(position).msg);
 
-		if( m_List.get(position).type == 0 ) {
+
+
+		if (m_List.get(position).type == 0) {
 			imageView.setVisibility(View.VISIBLE);
-			imageView.setBackgroundResource(R.drawable.saimdang_spk);
-			text.setBackgroundResource(R.drawable.detail_category_button_9);
+			imageView.setBackgroundResource(img[random.nextInt(4)]);
+//			text.setBackgroundResource(R.drawable.categorybox);
+			text.setVisibility(View.VISIBLE);
 			layout.setGravity(Gravity.LEFT);
 			viewRight.setVisibility(View.GONE);
 			viewLeft.setVisibility(View.GONE);
-		}else if(m_List.get(position).type == 1){
-			text.setBackgroundResource(R.drawable.detail_category_button_9);
+		} else if (m_List.get(position).type == 1) {
+//			text.setBackgroundResource(R.drawable.categorybox);
+			text.setVisibility(View.VISIBLE);
 			layout.setGravity(Gravity.RIGHT);
 			viewRight.setVisibility(View.GONE);
 			imageView.setVisibility(View.GONE);
 			viewLeft.setVisibility(View.GONE);
-		}else if(m_List.get(position).type == 2){
+		} else if (m_List.get(position).type == 2) {
 //			text.setBackgroundResource(R.drawable.datebg);
-			text.setVisibility(View.GONE);
+			text.setVisibility(View.VISIBLE);
 			layout.setGravity(Gravity.CENTER);
 			viewRight.setVisibility(View.VISIBLE);
 			imageView.setVisibility(View.GONE);
@@ -134,7 +140,7 @@ public class CustomAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(context, "由ъ뒪???대┃ : "+m_List.get(pos), Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "toast " + m_List.get(pos), Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -143,7 +149,7 @@ public class CustomAdapter extends BaseAdapter {
 
 			@Override
 			public boolean onLongClick(View v) {
-				Toast.makeText(context, "由ъ뒪??濡??대┃ : "+m_List.get(pos), Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "toast " + m_List.get(pos), Toast.LENGTH_SHORT).show();
 				return true;
 			}
 		});
@@ -152,11 +158,14 @@ public class CustomAdapter extends BaseAdapter {
 	}
 
 	private class CustomHolder {
-		TextView    m_TextView;
-		LinearLayout    layout;
+		TextView m_TextView;
+		LinearLayout layout;
 		View viewRight;
 		View viewLeft;
 		CircleImageView imageView;
 	}
+
+	static int img[] = {R.drawable.saimdang_spk, R.drawable.dabotap, R.drawable.sejong,
+	R.drawable.hack_spk};
 }
 

@@ -11,7 +11,7 @@ import rx.Observable;
  */
 
 public interface ISignUpProfilePresenter {
-	Observable<User> signUp(String email, String pwd, String name);
+	Observable<User> signUp(String email, String pwd, String account,String bank);
 
 	Observable<String> uploadProfileImg(File file);
 
